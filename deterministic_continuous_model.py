@@ -9,7 +9,7 @@ import torch.optim as optim
 import sys
 import netCDF4 as nc
 from saveNCfile import savenc
-from saveNCfile_for_activations import savenc_for_activations
+#from saveNCfile_for_activations import savenc_for_activations
 from data_loader import load_test_data
 from data_loader import load_train_data
 from prettytable import PrettyTable
@@ -109,7 +109,7 @@ for k in mylist:
 ##########################################################################################
 
 
-def regular_loss (output, target):
+def regular_loss(output, target):
 
  loss = torch.mean((output-target)**2)
  return loss    
@@ -198,10 +198,10 @@ print('**** Number of Trainable Parameters in BNN')
 count_parameters(net)
 
 
-batch_size = 10
+batch_size = 2
 num_epochs = 15
 num_samples = 2
-trainN = 7000
+trainN = 700
 lambda_reg =0.2
 wavenum_init=30
 wavenum_init_ydir=40
