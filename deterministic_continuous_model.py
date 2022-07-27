@@ -85,20 +85,6 @@ print('shape of normalized label test',psi_test_label_Tr_torch.shape)
 
 
 
-
-
-
-
-
-
-
-
-
-
-###############################################################################
-
-
-
 ################### Load training data files ########################################
 fileList_train_U=[]
 fileList_train_V=[]
@@ -158,11 +144,15 @@ def directstep(net,input_batch):
   return output_1
 
 
+input_ch=int(4)
+output_ch=int(4)
+
+
 
 class CNN(nn.Module):
     def __init__(self):
         super().__init__()
-        self.input_layer = (nn.Conv2d(4, 64, kernel_size=5, stride=1, padding='same'))
+        self.input_layer = (nn.Conv2d(input_ch, 64, kernel_size=5, stride=1, padding='same'))
         self.hidden1 = (nn.Conv2d(64, 64, kernel_size=5, stride=1, padding='same' ))
         self.hidden2 = (nn.Conv2d(64, 64, kernel_size=5, stride=1, padding='same' ))
         self.hidden3 = (nn.Conv2d(64, 64, kernel_size=5, stride=1, padding='same' ))
@@ -170,7 +160,7 @@ class CNN(nn.Module):
 
 
         self.hidden5 = (nn.Conv2d(128, 128, kernel_size=5, stride=1, padding='same' ))
-        self.hidden6 = (nn.Conv2d(192, 4, kernel_size=5, stride=1, padding='same' ))
+        self.hidden6 = (nn.Conv2d(192, output_ch, kernel_size=5, stride=1, padding='same' ))
     
     def forward (self,x):
 
@@ -274,7 +264,7 @@ for epoch in range(0, num_epochs):  # loop over the dataset multiple times
 
         # forward + backward + optimize
 #        output,_,_,_,_,_,_ = net(input_batch.cuda())
-        output = directstep(net,input_batch)
+        output = directstep(net,input_batch.cuda())
         loss = regular_loss(output, label_batch.cuda())
         loss.backward()
         optimizer.step()
